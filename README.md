@@ -13,11 +13,8 @@ This project aims to recreate the functionality of the NetCat command-line utili
 
 To use the NetCat project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/net-cat.git`
+1. Clone the repository: `git clone https://github.com/yjawad/net-cat.git`
 2. Navigate to the project directory: `cd net-cat`
-3. Compile the code: `make`
-4. Start the server: `./net-cat-server -p <port>`
-5. Start the client: `./net-cat-client -h <host> -p <port>`
-
-For more information on how to use NetCat, refer to the manual by running `man nc`.
+4. Start the server: `go run server.go <port>`
+5. Start the client: `nc <ip> <port>`
 
