@@ -19,6 +19,9 @@ var History []string
 
 func HandleConnection(conn net.Conn) {
 
+	welcome := "Welcome to TCP-Chat!\n         _nnnn_\n        dGGGGMMb\n       @p~qp~~qMb\n       M|@||@) M|\n       @,----.JM|\n      JS^\\__/  qKL\n     dZP        qKRb\n    dZP          qKKb\n   fZP            SMMb\n   HZM            MMMM\n   FqM            MMMM\n __| \".        |\\dS\"qML\n |    `.       | `' \\Zq\n_)      \\.___.,|     .'\n\\____   )MMMMMP|   .'\n     `-'       `--'\n"
+
+	go SendMessageTo(conn, welcome)
 	name, err := GetClientName(conn)
 	if err != nil {
 		return
@@ -90,7 +93,7 @@ func GetClientName(conn net.Conn) (string, error) {
 // function to be awating for the client to send the name
 func AwaitClientName(conn net.Conn) (string, error) {
 	//fmt.Println("Enter your name!")
-	SendMessageTo(conn, "Enter your name!\n")
+	SendMessageTo(conn, "[ENTER YOUR NAME]: ")
 	buffer := make([]byte, 1024)
 	n, err := conn.Read(buffer)
 	if err != nil {

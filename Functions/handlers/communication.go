@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"netcat/Functions/natheerspretty"
+	"time"
 )
 
 // function to broadcast message to selected client
@@ -18,16 +19,20 @@ func handleClientMessage(client Connection, message []byte) {
 	if IsEmpty(message) {
 		return
 	}
-	fmt.Println("the message is: ", string(message)+" and the length is: ", len(message))
-	History = append(History, client.Name, ": ", string(message)+"\n")
+
+	currentTime := time.Now().Format("2015-07-27 12:44:45")
+	formattedMessage := "[" + currentTime + "]:" + string(message)
+
+	fmt.Println(formattedMessage)
+	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
 	//broadcast the message to all clients
-	BroadcastMessage(client.Name, ": "+string(message))
+	BroadcastMessage(client.Name, formattedMessage)
 }
 
 func BroadcastMessage(clientName, message string) {
 	//broadcast the message to all clients
 	for _, connection := range Connections {
-		SendMessageTo(connection.Conn, clientName+message+"\n")
+		SendMessageTo(connection.Conn, "["+clientName+"]"+message+"\n")
 	}
 }
 
