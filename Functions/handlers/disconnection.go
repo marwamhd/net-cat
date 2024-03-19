@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"netcat/Functions/natheerspretty"
+	"sync"
 )
 
 func handleClientDisconnect(client Connection) {
@@ -16,14 +17,6 @@ func handleClientDisconnect(client Connection) {
 	//print the message to the server
 	fmt.Println(natheerspretty.RGBify(255, 0, 0, client.Name, " has left the chat"))
 }
-
-package handlers
-
-import (
-	"fmt"
-	"sync"
-	"netcat/Functions/natheerspretty"
-)
 
 var disconnectionMutex sync.Mutex
 

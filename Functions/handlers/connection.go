@@ -38,6 +38,7 @@ func HandleConnection(conn net.Conn) {
 		conn.Close()
 		return
 	}
+
 	mutex := sync.Mutex{}
 
 	mutex.Lock()
@@ -45,6 +46,9 @@ func HandleConnection(conn net.Conn) {
 
 	Connections = append(Connections, client)
 	mutex.Unlock()
+
+	//send a welcome message to the client
+	SendMessageTo(conn, "Welcome "+name+"!\n")
 
 	if len(History) > 0 {
 		for _, message := range History {
