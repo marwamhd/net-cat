@@ -30,12 +30,8 @@ func StartServer(ip string, port int) {
 			log.Fatal(natheerspretty.RGBify(255, 0, 0, "error: ", err))
 		}
 
-		client := handlers.Connection{Name: "client " + mainhelper.Itoa(len(handlers.Connections)), Conn: conn}
-		handlers.Connections = append(handlers.Connections, client)
-
 		// Handle the connection in a separate goroutine
-		go handlers.HandleConnection(client)
-		
+		go handlers.HandleConnection(conn)
 
 	}
 
