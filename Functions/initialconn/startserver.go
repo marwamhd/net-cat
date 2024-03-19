@@ -9,13 +9,6 @@ import (
 	"netcat/Functions/natheerspretty"
 )
 
-// This project consists on recreating the NetCat in a Server-Client Architecture that can run in a server mode on a specified port listening for incoming connections, and it can be used in client mode, trying to connect to a specified port and transmitting information to the server.
-
-// type Connection struct {
-// 	Name string
-// 	Conn net.Conn
-// }
-
 func StartServer(ip string, port int) {
 	listenAddress := net.JoinHostPort(ip, mainhelper.Itoa(port))
 	tcpListen, err := net.Listen("tcp", listenAddress)
@@ -36,5 +29,5 @@ func StartServer(ip string, port int) {
 	}
 
 	// Ensure tcpListen is closed when StartServer exits
-	defer tcpListen.Close()
+	//defer tcpListen.Close()
 }

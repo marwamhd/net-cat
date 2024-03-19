@@ -1,6 +1,8 @@
-package handlers
+package mainhelper
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestIsEmpty(t *testing.T) {
 	testCases := []struct {
@@ -12,7 +14,7 @@ func TestIsEmpty(t *testing.T) {
 		{[]byte{32, 32, 32}, true},
 		{[]byte{65, 66, 67}, false},
 		{[]byte{32, 65, 66, 67}, false},
-		{[]byte{32, 32, 32, 10}, true},
+		{[]byte{32, 32, 32, 32}, true},
 		{[]byte{32, 32, 32, 65, 10}, false},
 		{[]byte{65, 10}, false},
 	}

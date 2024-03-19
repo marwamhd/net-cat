@@ -3,7 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net"
-	"netcat/Functions/natheerspretty"
+	"netcat/Functions/mainhelper"
 	"time"
 )
 
@@ -13,10 +13,9 @@ func SendMessageTo(conn net.Conn, message string) {
 }
 
 func handleClientMessage(client Connection, message []byte) {
-	//print the message to the server
 
 	//check if the message is empty
-	if IsEmpty(message) {
+	if mainhelper.IsEmpty(message) {
 		return
 	}
 
@@ -34,21 +33,4 @@ func BroadcastMessage(clientName, message string) {
 	for _, connection := range Connections {
 		SendMessageTo(connection.Conn, "["+clientName+"]"+message+"\n")
 	}
-}
-
-func IsEmpty(message []byte) bool {
-	if len(message) <= 0 {
-		fmt.Println(natheerspretty.RGBify(255, 0, 0, "the message is empty"))
-		return true
-	}
-
-	for i := 0; i < len(message); i++ {
-		//check if the message is all spaces
-		if message[i] != 32 {
-			return false
-		}
-	}
-	fmt.Println(natheerspretty.RGBify(255, 0, 0, "the message is full of spaces"))
-
-	return true
 }
