@@ -2,6 +2,7 @@ package mainhelper
 
 import (
 	"fmt"
+	"reflect"
 
 	"netcat/Functions/natheerspretty"
 )
@@ -11,18 +12,6 @@ func IsEmpty(message []byte) bool {
 		fmt.Println(natheerspretty.RGBify(255, 0, 255, v))
 	}
 
-	// sigtraps:= []byte{}
-
-	if len(message) > 2 {
-		for i := 0; i < len(message)-3+1; i++ {
-			fmt.Println(message[i : i+3])
-			if string(message[i:i+3]) == string([]byte{27, 91, 65}) {
-				fmt.Println("detected this")
-			}
-			// message[0:3]== [27 91 65]
-			// message[1:4]== [27 91 65]
-		}
-	}
 	if len(message) <= 0 {
 		fmt.Println(natheerspretty.RGBify(255, 0, 0, "the message is empty"))
 		return true
@@ -37,4 +26,27 @@ func IsEmpty(message []byte) bool {
 	fmt.Println(natheerspretty.RGBify(255, 0, 0, "the message is full of spaces"))
 
 	return true
+}
+
+func Signaltrapchecker(message []byte) bool {
+
+	UP := []byte{27, 91, 65}
+	DOWN := []byte{27, 91, 66}
+	LEFT := []byte{27, 91, 68}
+	RIGHT := []byte{27, 91, 67}
+	HOME := []byte{27, 91, 72}
+	END := []byte{27, 91, 70}
+	sigtraps := [][]byte{UP, DOWN, LEFT, RIGHT, HOME, END}
+
+	if len(message) > 2 {
+		for i := 0; i < len(message)-3+1; i++ {
+			for _, sigtrap := range sigtraps {
+				if reflect.DeepEqual(message[i:i+3], sigtrap) {
+					fmt.Println("detected", sigtrap)
+					return true
+				}
+			}
+		}
+	}
+	return false
 }

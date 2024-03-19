@@ -18,6 +18,11 @@ InvalidName:
 	if err != nil {
 		return "", err
 	}
+
+	if mainhelper.Signaltrapchecker([]byte(name)) {
+		return "", errors.New("signal trap detected")
+	}
+
 	if mainhelper.IsEmpty([]byte(name)) {
 		SendMessageTo(conn, "error: the name cannot be empty\n")
 		goto InvalidName
