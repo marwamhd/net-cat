@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net"
+	"sync"
 	"time"
 
 	"netcat/Functions/mainhelper"
@@ -20,6 +21,8 @@ func SendMessageToWithChannel(conn net.Conn, message string, d chan bool) {
 
 func handleClientMessage(client Connection, message []byte) {
 	// check if the message is empty
+	var historyMutex sync.Mutex
+
 	if mainhelper.IsEmpty(message) {
 		return
 	}
@@ -28,7 +31,11 @@ func handleClientMessage(client Connection, message []byte) {
 	formattedMessage := "[" + currentTime + "]:" + string(message)
 
 	fmt.Println("[" + client.Name + "]" + formattedMessage)
+	//add a mutex here
+	// add the message to the history
+	historyMutex.Lock()
 	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
+	historyMutex.Unlock()
 	// broadcast the message to all clients
 	BroadcastMessageExceptSender(client.Name, formattedMessage)
 	// SendMessageTo(client.Conn, "["+client.Name+"]"+"["+currentTime+"]:")

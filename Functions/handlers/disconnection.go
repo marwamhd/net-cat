@@ -17,12 +17,26 @@ func handleClientDisconnect(client Connection) {
 	fmt.Println(natheerspretty.RGBify(255, 0, 0, client.Name, " has left the chat"))
 }
 
+package handlers
+
+import (
+	"fmt"
+	"sync"
+	"netcat/Functions/natheerspretty"
+)
+
+var disconnectionMutex sync.Mutex
+
 func removeClientFromConnections(client Connection) {
 	//remove the client from the connections global variable
+
+	//add a mutex here
+	disconnectionMutex.Lock()
 	for i, connection := range Connections {
 		if connection.Name == client.Name {
 			Connections = append(Connections[:i], Connections[i+1:]...)
 			break
 		}
 	}
+	disconnectionMutex.Unlock()
 }
