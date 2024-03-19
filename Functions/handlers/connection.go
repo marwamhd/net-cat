@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"netcat/Functions/natheerspretty"
+	"sync"
 )
 
 var Connections []Connection
@@ -20,9 +21,20 @@ func HandleConnection(conn net.Conn) {
 	if err != nil {
 		return
 	}
+
+	if len(Connections) == 9 {
+		SendMessageTo(conn, "error: the server is full\n")
+		conn.Close()
+		return
+	}
+	mutex := sync.Mutex{}
+
+	mutex.Lock()
 	client := Connection{Name: name, Conn: conn}
 
 	Connections = append(Connections, client)
+	mutex.Unlock()
+
 	//assume the first message is the name of the client
 	//set the name of the client, -1 to remove the newline character
 
