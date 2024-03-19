@@ -27,7 +27,7 @@ func handleClientMessage(client Connection, message []byte) {
 	currentTime := time.Now().Format("2006-01-02 15:04:05")
 	formattedMessage := "[" + currentTime + "]:" + string(message)
 
-	fmt.Println(formattedMessage)
+	fmt.Println("[" + client.Name + "]" + formattedMessage)
 	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
 	// broadcast the message to all clients
 	BroadcastMessage(client.Name, formattedMessage)
