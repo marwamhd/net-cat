@@ -19,7 +19,7 @@ func handleClientMessage(client Connection, message []byte) {
 		return
 	}
 
-	currentTime := time.Now().Format("2015-07-27 12:44:45")
+	currentTime := time.Now().Format("2006-01-02 15:04:05")
 	formattedMessage := "[" + currentTime + "]:" + string(message)
 
 	fmt.Println(formattedMessage)
