@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net"
 	"sync"
-	"time"
 
 	"netcat/Functions/natheerspretty"
 )
@@ -53,9 +52,9 @@ func HandleConnection(conn net.Conn) {
 		}
 	}
 
-	BroadcastMessage(client.Name, " has joined the chat")
-	currentTime := time.Now().Format("2006-01-02 15:04:05")
-	SendMessageTo(client.Conn, "["+client.Name+"]"+"["+currentTime+"]:")
+	BroadcastMessageExceptSenderNewLine(client.Name, " has joined the chat")
+	// currentTime := time.Now().Format("2006-01-02 15:04:05")
+	// SendMessageTo(client.Conn, "["+client.Name+"]"+"["+currentTime+"]:")
 
 	defer client.Conn.Close()
 	fmt.Println(natheerspretty.RGBify(0, 255, 0, "Serving ", client.Conn.RemoteAddr().String()))

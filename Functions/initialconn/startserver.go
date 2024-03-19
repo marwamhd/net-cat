@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+
 	"netcat/Functions/handlers"
 	"netcat/Functions/mainhelper"
 	"netcat/Functions/natheerspretty"
@@ -29,5 +30,5 @@ func StartServer(ip string, port int) {
 	}
 
 	// Ensure tcpListen is closed when StartServer exits
-	//defer tcpListen.Close()
+	// defer tcpListen.Close()
 }

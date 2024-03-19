@@ -17,6 +17,7 @@ func TestIsEmpty(t *testing.T) {
 		{[]byte{32, 32, 32, 32}, true},
 		{[]byte{32, 32, 32, 65, 10}, false},
 		{[]byte{65, 10}, false},
+		{[]byte{9, 10, 31, 12}, true},
 	}
 
 	for _, tc := range testCases {
