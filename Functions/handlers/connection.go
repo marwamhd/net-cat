@@ -26,7 +26,7 @@ func HandleConnection(conn net.Conn) {
 		return
 	}
 
-	if len(Connections) >= 3 {
+	if len(Connections) >= 10 {
 		SendMessageTo(conn, "error: the server is full\n")
 		conn.Close()
 		return

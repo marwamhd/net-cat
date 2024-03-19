@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"netcat/Functions/initialconn"
 	"netcat/Functions/mainhelper"
@@ -30,8 +29,8 @@ func main() {
 		natheerspretty.Redify(err)
 		return
 	}
-	fmt.Println("Server IP Address:", ip)
-	fmt.Println("Server is running on port:", mainhelper.Itoa(port))
+	// fmt.Println("Server IP Address:", ip)
+	// fmt.Println("Server is running on port:", mainhelper.Itoa(port))
 
 	//now start listenting for tcp connection on the specified port
 	initialconn.StartServer(ip, port)
