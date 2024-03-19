@@ -31,7 +31,7 @@ func HandleConnection(client Connection) {
 			return
 		}
 
-		handleClientMessage(actualClient, buffer[:n])
+		handleClientMessage(actualClient, buffer[:n-1])
 	}
 
 }
@@ -39,9 +39,9 @@ func HandleConnection(client Connection) {
 // function to set the name of the client
 func SetClientName(client Connection) Connection {
 	name := ""
-	for name == "" {
+	for IsEmpty([]byte(name)) {
 		name = AwaitClientName(client)
-		if name == "" {
+		if IsEmpty([]byte(name)) {
 			SendMessageTo(client.Conn, "error: the name cannot be empty\n")
 		}
 		for _, connection := range Connections {
