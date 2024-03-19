@@ -2,6 +2,7 @@ package mainhelper
 
 import (
 	"fmt"
+
 	"netcat/Functions/natheerspretty"
 )
 
@@ -12,7 +13,7 @@ func IsEmpty(message []byte) bool {
 	}
 
 	for i := 0; i < len(message); i++ {
-		//check if the message is all spaces
+		// check if the message is all spaces
 		if message[i] != 32 {
 			return false
 		}

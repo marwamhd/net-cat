@@ -3,8 +3,9 @@ package handlers
 import (
 	"fmt"
 	"net"
-	"netcat/Functions/natheerspretty"
 	"sync"
+
+	"netcat/Functions/natheerspretty"
 )
 
 var Connections []Connection
@@ -17,11 +18,17 @@ type Connection struct {
 var History []string
 
 func HandleConnection(conn net.Conn) {
-
+	done := make(chan bool, 1)
 	welcome := "Welcome to TCP-Chat!\n         _nnnn_\n        dGGGGMMb\n       @p~qp~~qMb\n       M|@||@) M|\n       @,----.JM|\n      JS^\\__/  qKL\n     dZP        qKRb\n    dZP          qKKb\n   fZP            SMMb\n   HZM            MMMM\n   FqM            MMMM\n __| \".        |\\dS\"qML\n |    `.       | `' \\Zq\n_)      \\.___.,|     .'\n\\____   )MMMMMP|   .'\n     `-'       `--'\n"
+	var name string
+	var err error
+	go func() {
+		SendMessageToWithChannel(conn, welcome, done)
+	}()
 
-	go SendMessageTo(conn, welcome)
-	name, err := GetClientName(conn)
+	<-done
+
+	name, err = GetClientName(conn)
 	if err != nil {
 		return
 	}
@@ -59,5 +66,4 @@ func HandleConnection(conn net.Conn) {
 
 		handleClientMessage(client, buffer[:n-1])
 	}
-
 }

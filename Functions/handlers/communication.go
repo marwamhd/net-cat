@@ -3,8 +3,9 @@ package handlers
 import (
 	"fmt"
 	"net"
-	"netcat/Functions/mainhelper"
 	"time"
+
+	"netcat/Functions/mainhelper"
 )
 
 // function to broadcast message to selected client
@@ -12,9 +13,13 @@ func SendMessageTo(conn net.Conn, message string) {
 	conn.Write([]byte(message))
 }
 
-func handleClientMessage(client Connection, message []byte) {
+func SendMessageToWithChannel(conn net.Conn, message string, d chan bool) {
+	conn.Write([]byte(message))
+	d <- true
+}
 
-	//check if the message is empty
+func handleClientMessage(client Connection, message []byte) {
+	// check if the message is empty
 	if mainhelper.IsEmpty(message) {
 		return
 	}
@@ -24,12 +29,12 @@ func handleClientMessage(client Connection, message []byte) {
 
 	fmt.Println(formattedMessage)
 	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
-	//broadcast the message to all clients
+	// broadcast the message to all clients
 	BroadcastMessage(client.Name, formattedMessage)
 }
 
 func BroadcastMessage(clientName, message string) {
-	//broadcast the message to all clients
+	// broadcast the message to all clients
 	for _, connection := range Connections {
 		SendMessageTo(connection.Conn, "["+clientName+"]"+message+"\n")
 	}
