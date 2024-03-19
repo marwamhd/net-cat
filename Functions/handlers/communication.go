@@ -30,12 +30,22 @@ func handleClientMessage(client Connection, message []byte) {
 	fmt.Println("[" + client.Name + "]" + formattedMessage)
 	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
 	// broadcast the message to all clients
-	BroadcastMessage(client.Name, formattedMessage)
+	BroadcastMessageExceptSender(client.Name, formattedMessage)
+	SendMessageTo(client.Conn, "["+client.Name+"]"+"["+currentTime+"]:")
 }
 
 func BroadcastMessage(clientName, message string) {
 	// broadcast the message to all clients
 	for _, connection := range Connections {
 		SendMessageTo(connection.Conn, "["+clientName+"]"+message+"\n")
+	}
+}
+
+func BroadcastMessageExceptSender(clientName, message string) {
+	// broadcast the message to all clients
+	for _, connection := range Connections {
+		if connection.Name != clientName {
+			SendMessageTo(connection.Conn, "["+clientName+"]"+message+"\n")
+		}
 	}
 }
