@@ -15,6 +15,8 @@ type Connection struct {
 	Conn net.Conn
 }
 
+var History []string
+
 func HandleConnection(conn net.Conn) {
 
 	name, err := GetClientName(conn)
@@ -22,7 +24,7 @@ func HandleConnection(conn net.Conn) {
 		return
 	}
 
-	if len(Connections) == 9 {
+	if len(Connections) >= 3 {
 		SendMessageTo(conn, "error: the server is full\n")
 		conn.Close()
 		return
@@ -34,6 +36,12 @@ func HandleConnection(conn net.Conn) {
 
 	Connections = append(Connections, client)
 	mutex.Unlock()
+
+	if len(History) > 0 {
+		for _, message := range History {
+			SendMessageTo(conn, message)
+		}
+	}
 
 	//assume the first message is the name of the client
 	//set the name of the client, -1 to remove the newline character

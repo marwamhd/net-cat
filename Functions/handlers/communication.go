@@ -19,6 +19,7 @@ func handleClientMessage(client Connection, message []byte) {
 		return
 	}
 	fmt.Println("the message is: ", string(message)+" and the length is: ", len(message))
+	History = append(History, client.Name, ": ", string(message)+"\n")
 	//broadcast the message to all clients
 	BroadcastMessage(client.Name, ": "+string(message))
 }
