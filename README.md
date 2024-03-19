@@ -15,7 +15,7 @@ To use the NetCat project, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/yjawad/net-cat.git`
 2. Navigate to the project directory: `cd net-cat`
-3. build the server file: `go build -o netcatserver server.go`
-4. run the server: `./netcatserver`
+3. build the server file: `go build -o TCPChat server.go`
+4. run the server: `./TCPChat` or `./TCPChat <port>`
 5. connect the client: `nc <ip> <port>`
 
