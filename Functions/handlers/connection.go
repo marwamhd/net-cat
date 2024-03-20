@@ -5,6 +5,7 @@ import (
 	"net"
 	"sync"
 
+	"netcat/Functions/mainhelper"
 	"netcat/Functions/natheerspretty"
 )
 
@@ -30,6 +31,8 @@ func HandleConnection(conn net.Conn) {
 
 	name, err = GetClientName(conn)
 	if err != nil {
+		fmt.Println(natheerspretty.RGBify(255, 0, 0, "Error: ", err))
+		conn.Close()
 		return
 	}
 
@@ -47,7 +50,7 @@ func HandleConnection(conn net.Conn) {
 	Connections = append(Connections, client)
 	mutex.Unlock()
 
-	//send a welcome message to the client
+	// send a welcome message to the client
 	SendMessageTo(conn, "Welcome "+name+"!\n")
 
 	if len(History) > 0 {
@@ -65,7 +68,7 @@ func HandleConnection(conn net.Conn) {
 	for {
 		buffer := make([]byte, 1024)
 		n, err := client.Conn.Read(buffer)
-		if err != nil {
+		if err != nil || mainhelper.Signaltrapchecker(buffer[:n-1]) {
 			handleClientDisconnect(client)
 			return
 		}

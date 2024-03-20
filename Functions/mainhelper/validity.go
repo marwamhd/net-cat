@@ -8,9 +8,9 @@ import (
 )
 
 func IsEmpty(message []byte) bool {
-	for _, v := range message {
-		fmt.Println(natheerspretty.RGBify(255, 0, 255, v))
-	}
+	// for _, v := range message {
+	// 	fmt.Println(natheerspretty.RGBify(255, 0, 255, v))
+	// }
 
 	if len(message) <= 0 {
 		fmt.Println(natheerspretty.RGBify(255, 0, 0, "the message is empty"))
@@ -29,7 +29,6 @@ func IsEmpty(message []byte) bool {
 }
 
 func Signaltrapchecker(message []byte) bool {
-
 	UP := []byte{27, 91, 65}
 	DOWN := []byte{27, 91, 66}
 	LEFT := []byte{27, 91, 68}
@@ -42,7 +41,7 @@ func Signaltrapchecker(message []byte) bool {
 		for i := 0; i < len(message)-3+1; i++ {
 			for _, sigtrap := range sigtraps {
 				if reflect.DeepEqual(message[i:i+3], sigtrap) {
-					fmt.Println("detected", sigtrap)
+					// fmt.Println("detected", sigtrap)
 					return true
 				}
 			}

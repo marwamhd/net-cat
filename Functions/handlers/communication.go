@@ -31,7 +31,7 @@ func handleClientMessage(client Connection, message []byte) {
 	formattedMessage := "[" + currentTime + "]:" + string(message)
 
 	fmt.Println("[" + client.Name + "]" + formattedMessage)
-	//add a mutex here
+	// add a mutex here
 	// add the message to the history
 	historyMutex.Lock()
 	History = append(History, "["+client.Name+"]"+formattedMessage+"\n")
